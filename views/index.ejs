@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <H1>Kurser</H1>
+
+    <h2>Lägg till kurser</h2>
+    <form id="inputform" action="">
+        <label for="code">Kurskod</label>
+        <input type="text" id="code" required>
+        <br>
+        <label for="kursnamn">Kursnamn</label>
+        <input type="text" id="kursnamn" required>
+        <br>
+        <label for="progression">Progression</label>
+        <input type="text" id="progression" required>
+        <br>
+        <label for="syllabus">Lånk/URL</label>
+        <input type="text" id="syllabus" required>
+        <br>
+        <button type="submit">Lägg till data</button>
+    </form>
+
+
+    <h2>Tillagda kurser</h2>
+    <ul>
+        <% messages.forEach((message) => { %>
+            <li><%= message.name %></li>
+        <% }) %>
+    </ul>
+
+
+
+</body>
+</html>
