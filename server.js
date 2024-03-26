@@ -116,7 +116,7 @@ app.post("/addcourse", cors(), async (req, res) => {
     
     const { code, name, syllabus, progression } = req.body;
 
-    const result = await client.query("INSERT INTO courses(code, name, syllabus, progression) VALUES ($1,$2,$3,$4)",[code, name, syllabus, Progression])
+    const result = await client.query("INSERT INTO courses(code, name, syllabus, progression) VALUES ($1,$2,$3,$4)",[code, name, syllabus, progression])
 
 });
 
