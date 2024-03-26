@@ -3,13 +3,14 @@ const {Client} = require("pg");
 require("dotenv").config();
 
 const cors = require('cors');
-const express = require("express");
-const app = express();
-
-const cors = require('cors');
 app.use(cors({
     origin: "*", // For development, allows requests from all origins
 }));
+
+
+const express = require("express");
+const app = express();
+
 
 
 app.set("view engine", "ejs");
