@@ -40,28 +40,10 @@ client.connect((err) => {
 //kurser som finns inlagda i systemet
 app.get("/",async(req,res) =>{
     
-    client.query("SELECT * FROM courses", (err, result) =>{
-        if(err)
-        {
-            console.log("nåt gick fel")
-        }
-        else
-        {
-            console.log("Hämtat data")
-            if(result.rows.length < 1)
-            {
-                console.log("inga rader fanns.sätta nåt default värde?")
-                res.json(result.rows);
-            }
-            else
-            {
-                res.json(result.rows);
-            }
 
-        }
-
-    });
-});
+    res("välkommen till server")
+}
+);
 
 
 
