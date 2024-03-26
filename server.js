@@ -103,7 +103,7 @@ app.get("/api/student",cors(), async(req,res) =>{
     });
 });
 
-app.post("/",async(req,res) => {
+app.post("/",cors() ,async(req,res) => {
     console.log("lägger till data.")
     
     const { code, name, syllabus, progression } = req.body;
