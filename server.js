@@ -40,9 +40,13 @@ client.connect((err) => {
 //kurser som finns inlagda i systemet
 app.get("/",async(req,res) =>{
     
-    const message = "Tjenare";
+    const messages = [
+        { name: 'Message 1' },
+        { name: 'Message 2' },
+        { name: 'Message 3' }
+    ];
 
-    res.render("index",message);
+    res.render('index', { messages });
 });
 
 //kurser som finns inlagda i systemet
