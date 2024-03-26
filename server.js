@@ -5,7 +5,12 @@ require("dotenv").config();
 const cors = require('cors');
 const express = require("express");
 const app = express();
-app.use(cors());
+
+app.use(cors({
+    origin: ["*"], 
+    methods: ["GET", "POST"] 
+  }));
+
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({extended:true}));
@@ -103,7 +108,7 @@ app.get("/api/student",cors(), async(req,res) =>{
     });
 });
 
-app.post("/",cors() ,async(req,res) => {
+app.post("/addcourse",cors() ,async(req,res) => {
     console.log("lägger till data.")
     
     const { code, name, syllabus, progression } = req.body;
