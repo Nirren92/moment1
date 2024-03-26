@@ -37,17 +37,6 @@ client.connect((err) => {
 
 //Routing
 
-//kurser som finns inlagda i systemet
-app.get("/",async(req,res) =>{
-    
-
-    res.console.log("välkommen till server")
-}
-);
-
-
-
-
 
 //kurser som finns inlagda i systemet
 app.get("/api/courses",async(req,res) =>{
