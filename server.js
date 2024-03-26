@@ -8,7 +8,8 @@ const app = express();
 
 app.use(cors({
     origin: ["*"], 
-    methods: ["GET", "POST"] 
+    methods: ["GET", "POST"], 
+    origin: ["*"] 
   }));
 
 app.set("view engine", "ejs");
