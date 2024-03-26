@@ -37,6 +37,11 @@ client.connect((err) => {
 
 //Routing
 
+//kurser som finns inlagda i systemet
+app.get("/",async(req,res) =>{
+    
+    res.render("index");
+});
 
 //kurser som finns inlagda i systemet
 app.get("/api/courses",async(req,res) =>{
@@ -88,12 +93,6 @@ app.get("/api/student",async(req,res) =>{
         }
 
     });
-    
-    
-    
-
-
-
 });
 
 app.post("/",async(req,res) => {
