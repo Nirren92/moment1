@@ -6,7 +6,11 @@ const cors = require('cors');
 const express = require("express");
 const app = express();
 
-app.use(cors());
+const cors = require('cors');
+app.use(cors({
+    origin: "*", // For development, allows requests from all origins
+}));
+
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -105,7 +109,7 @@ app.get("/api/student",cors(), async(req,res) =>{
     });
 });
 
-app.post("/addcourse",cors() ,async(req,res) => {
+app.post("/addcourse", cors(), async (req, res) => {
     console.log("lägger till data.")
     
     const { code, name, syllabus, progression } = req.body;
