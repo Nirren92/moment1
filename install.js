@@ -70,7 +70,7 @@ CREATE TABLE read_course(
 );
 
 
-INSERT INTO courses (code, name, syllabus, Progression) VALUES 
+INSERT INTO courses (code, name, syllabus, progression) VALUES 
 ('DT001','kurs ett','länk','A'),
 ('DT002','kurs ett','länk','A'),
 ('DT003','kurs ett','länk','A');
