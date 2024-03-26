@@ -105,6 +105,11 @@ app.get("/api/student",cors(), async(req,res) =>{
 
 app.post("/",async(req,res) => {
     console.log("lägger till data.")
+    
+    const { code, name, syllabus, progression } = req.body;
+
+    const result = await client.query("INSERT INTO courses(code, name, syllabus, Progression) VALUES ($1,$2,$3,$4)",[code, name, syllabus, Progression])
+
 });
 
 //Starta server
