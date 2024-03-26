@@ -6,11 +6,7 @@ const cors = require('cors');
 const express = require("express");
 const app = express();
 
-app.use(cors({
-    origin: ["*"], 
-    methods: ["GET", "POST"], 
-    origin: ["*"] 
-  }));
+app.use(cors());
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
