@@ -2,8 +2,10 @@ const { render } = require("ejs");
 const {Client} = require("pg");
 require("dotenv").config();
 
+const cors = require('cors');
 const express = require("express");
 const app = express();
+app.use(cors());
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({extended:true}));
@@ -37,8 +39,8 @@ client.connect((err) => {
 
 //Routing
 
-//kurser som finns inlagda i systemet
-app.get("/",async(req,res) =>{
+//startsida på server
+app.get("/",cors(), async(req,res) =>{
     
     const messages = [
         { name: 'Message 1' },
@@ -49,8 +51,8 @@ app.get("/",async(req,res) =>{
     res.render('index', { messages });
 });
 
-//kurser som finns inlagda i systemet
-app.get("/api/courses",async(req,res) =>{
+//kurser som finns inlagda i systemet. Testar att skapa api
+app.get("/api/courses",cors(),async(req,res) =>{
     
     client.query("SELECT * FROM courses", (err, result) =>{
         if(err)
@@ -76,8 +78,8 @@ app.get("/api/courses",async(req,res) =>{
 });
 
 //studenter som finns inlagda i systemet
-app.get("/api/student",async(req,res) =>{
-    
+app.get("/api/student",cors(), async(req,res) =>{
+     
     client.query("SELECT * FROM student", (err, result) =>{
         if(err)
         {
