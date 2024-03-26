@@ -41,7 +41,7 @@ client.connect((err) => {
 app.get("/",async(req,res) =>{
     
 
-    res("välkommen till server")
+    res.console.log("välkommen till server")
 }
 );
 
