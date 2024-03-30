@@ -8,9 +8,12 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
+
+
+//ta bort denna sedan, 
 const cors = require('cors');
 app.use(cors({
-    origin: "*", // For development, allows requests from all origins
+    origin: "*", 
 }));
 
 
@@ -50,15 +53,51 @@ client.connect((err) => {
 
 //startsida på server
 app.get("/",cors(), async(req,res) =>{
-    
-    const messages = [
-        { name: 'Message 1' },
-        { name: 'Message 2' },
-        { name: 'Message 3' }
-    ];
-
-    res.render('index', { messages });
+    client.query("SELECT * FROM courses", (err, result) =>{
+        if(err)
+        {
+            console.log("nåt gick fel")
+        }
+        else
+        {
+            console.log("Hämtat data")
+            if(result.rows.length < 1)
+            {
+                console.log("inga rader fanns.sätta nåt default värde?")
+            }
+            else
+            {
+                
+                res.render('index', { messages:result.rows });
+            }
+        }
+    });
 });
+
+
+//startsida på server
+app.get("/addcourse",cors(), async(req,res) =>{
+    client.query("SELECT * FROM courses", (err, result) =>{
+        if(err)
+        {
+            console.log("nåt gick fel")
+        }
+        else
+        {
+            console.log("Hämtat data")
+            if(result.rows.length < 1)
+            {
+                console.log("inga rader fanns.sätta nåt default värde?")
+            }
+            else
+            {
+                
+                res.render('addcourse', { messages:result.rows });
+            }
+        }
+    });
+});
+
 
 //kurser som finns inlagda i systemet. Testar att skapa api
 app.get("/api/courses",cors(),async(req,res) =>{
@@ -82,7 +121,6 @@ app.get("/api/courses",cors(),async(req,res) =>{
             }
 
         }
-
     });
 });
 
@@ -112,16 +150,24 @@ app.get("/api/student",cors(), async(req,res) =>{
     });
 });
 
-app.post("/addcourse", cors(), async (req, res) => {
+app.post('/addcourse', cors(), async (req, res) => {
     console.log("lägger till data.")
     
-    const { code, name, syllabus, progression } = req.body;
+    const { code, kursnamn, syllabus, progression } = req.body;
 
-    const result = await client.query("INSERT INTO courses(code, name, syllabus, progression) VALUES ($1,$2,$3,$4)",[code, name, syllabus, progression])
+    console.log("värden är "+code);
+    const result = await client.query("INSERT INTO courses(code, name, syllabus, progression) VALUES ($1,$2,$3,$4)",[code, kursnamn, syllabus, progression])
+    res.redirect('/');
+});
 
+app.post('/removecourse', async (req, res) => {
+    const { code } = req.body;
+    const result = await client.query("DELETE FROM courses WHERE code=$1",[code])  
+    res.redirect('/');
 });
 
 //Starta server
 app.listen(process.env.PORT, () =>{
     console.log("server startad");   
 });
+
