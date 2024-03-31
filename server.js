@@ -69,7 +69,7 @@ app.get("/", async(req,res) =>{
 });
 
 
-//startsida på server
+//adddera kurs på server
 app.get("/addcourse", async(req,res) =>{
     client.query("SELECT * FROM courses", (err, result) =>{
         if(err)
@@ -90,6 +90,17 @@ app.get("/addcourse", async(req,res) =>{
             }
         }
     });
+});
+
+
+//about sida
+
+//startsida på server
+app.get("/about", async(req,res) =>{
+ 
+                res.render('about');
+         
+    
 });
 
 
