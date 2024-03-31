@@ -89,7 +89,7 @@ table
 {
     padding: 10px;
     margin: auto;
-    width: 80%;
+    width: 95%;
     background-color: aliceblue;
     min-height: 100px;
     table-layout: fixed;
@@ -98,6 +98,7 @@ table
 th{
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: clamp(10px, 3vw, 24px);
 }
 td
 {
