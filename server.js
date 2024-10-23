@@ -85,39 +85,28 @@ app.get("/", async(req,res) =>{
 
 
 //adddera kurs på server
-app.get("/addcourse", async(req,res) =>{
-    client.query("SELECT * FROM courses", (err, result) =>{
-        if(err)
-        {
-            console.log("nåt gick fel")
+app.get("/addcourse", async(req, res) => {
+    client.query("SELECT * FROM courses", (err, result) => {
+        if (err) {
+            console.log("nåt gick fel");
             res.render('addcourse', {
-                messages: result.rows.length > 0 ? result.rows : [],
+                messages: [], 
                 errors: [],
                 code: "",
                 kursnamn: "",
                 syllabus: "",
                 progression: ""
             });
-        }
-        else
-        {
-            console.log("Hämtat data")
-            if(result.rows.length < 1)
-            {
-                console.log("inga rader fanns.sätta nåt default värde?")
-            }
-            else
-            {
-                
-                res.render('addcourse', {
-                    messages: result.rows.length > 0 ? result.rows : [],
-                    errors: [],
-                    code: "",
-                    kursnamn: "",
-                    syllabus: "",
-                    progression: ""
-                });
-            }
+        } else {
+            console.log("Hämtat data");
+            res.render('addcourse', {
+                messages: result.rows.length > 0 ? result.rows : [], 
+                errors: [],
+                code: "",
+                kursnamn: "",
+                syllabus: "",
+                progression: ""
+            });
         }
     });
 });
