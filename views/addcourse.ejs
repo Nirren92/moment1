@@ -23,15 +23,13 @@
 
     <% if (locals.errors.length > 0) { %>
         <ul>
-            <% errors.forEach((error) => {%>
+            <% errors.forEach((error) => { %>
             <li>
                 <%= error %>
             </li>
-            <% });%>
-
+            <% }); %>
         </ul>
-
-    <% } %>
+        <% } %>
     
     <form id="inputform" action="/addcourse" method="post" >
         <label for="code">Kurskod</label>
