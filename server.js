@@ -190,32 +190,15 @@ app.get("/api/student", async(req,res) =>{
 });
 
 //lägger till kurs
-app.post('/addcourse', async (req, res) => {
-   let errors = [];
-   const { code, kursnamn, syllabus, progression } = req.body;
-
-    if(code ==="")
-    {
-        errors.push("Du måste ha nåt i code")
-    }
-    if(kursnamn ==="")
-    {
-        errors.push("Du måste ha nåt i kursnamn")
-    }    
-    if(syllabus ==="")
-    {
-        errors.push("Du måste ha nåt i syllabus")
-    }    
-    if(progression ==="" && (progression==="A" || progression==="B" ||progression==="C" ))
-    {
-        errors.push("Du måste ha nåt i progression samt så måste det vara A, B eller C. notera storbokstav")
-    } 
-
-    // Om det finns valideringsfel  
-    if (errors.length > 0) {
+app.post('/addcourse', validateCourse(),async (req, res) => {
+    
+    const errors = validationResult(req);
    
-        res.render("addcourse", {
-            errors: errors,
+    const { code, kursnamn, syllabus, progression } = req.body;
+
+    if (!errors.isEmpty()) {
+        return res.render('addcourse', {
+            errors: errors.array().map(err => err.msg), // Fånga alla fel
             code: code,
             kursnamn: kursnamn,
             syllabus: syllabus,
