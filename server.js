@@ -152,10 +152,16 @@ app.get("/api/student", async(req,res) =>{
 });
 
 //lägger till kurs
-app.post('/addcourse',  async (req, res) => {
+app.post('/addcourse', validateCourse(), async (req, res) => {
    
     try
     {
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+    {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const { code, kursnamn, syllabus, progression } = req.body;
     const result = await client.query("INSERT INTO courses(code, name, syllabus, progression) VALUES ($1,$2,$3,$4)",[code, kursnamn, syllabus, progression])
     }
@@ -170,7 +176,12 @@ app.post('/addcourse',  async (req, res) => {
 app.post('/removecourse', async (req, res) => {
     try
     {
+
        const { code } = req.body;
+        if(!code)
+        {
+            return res.status(400).json({error:"felaktig input vid radering av kursen. du måste skicka med Code"});
+        }
        const result = await client.query("DELETE FROM courses WHERE code=$1",[code])  
        
     }
@@ -185,4 +196,17 @@ app.post('/removecourse', async (req, res) => {
 app.listen(process.env.PORT, () =>{
     console.log("server startad");   
 });
+
+
+//code, kursnamn, syllabus, progression
+const validateCourse = () => {
+    console.log("kontrollerar data");
+    return [
+       
+        body('progression').custom(value => ["A", "B", "C"].includes(value)).withMessage('Måste vara A, B eller C. notera stor bokstav'),
+        body('code').custom(value => value != "").withMessage('code Får inte vara tomt'),
+        body('kursnamn').custom(value => value != "").withMessage('kursnamn description Får inte vara tomt'),
+        body('syllabus').isURL().withMessage('Måste vara en giltlig URL')
+    ];
+};
 
