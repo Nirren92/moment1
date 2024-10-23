@@ -172,9 +172,10 @@ app.post('/addcourse', validateCourse(), async (req, res) => {
     try
     {
     const errors = validationResult(req);
-    if (!errors.isEmpty())
-    {
-        errors: errors.array()
+    if (!errors.isEmpty()) {
+        return res.render("addcourse", {
+            errorMessages: errors.array()
+        });
     }
 
     const { code, kursnamn, syllabus, progression } = req.body;
@@ -184,11 +185,7 @@ app.post('/addcourse', validateCourse(), async (req, res) => {
     {
         console.error("Nåt gick fel:"+err)
     }
-    res.render("addcourse",
-        {
-            error:error
-        }
-    );
+    res.redirect('/');
 
 });
 //tar bort kurs
