@@ -194,15 +194,19 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
     const { code, kursnamn, syllabus, progression } = req.body;
 
     if (!errors.isEmpty()) {
-        return res.render('addcourse', {
-            errors: errors.array().map(err => err.msg),
-            code: code,
-            kursnamn: kursnamn,
-            syllabus: syllabus,
-            progression: progression
+        // Fetch current courses again for the page
+        client.query("SELECT * FROM courses", (err, result) => {
+            res.render('addcourse', {
+                messages: result.rows.length > 0 ? result.rows : [],
+                errors: errors.array().map(err => err.msg),
+                code: code,
+                kursnamn: kursnamn,
+                syllabus: syllabus,
+                progression: progression
+            });
         });
+        return;
     }
-
     else
     {
         try
