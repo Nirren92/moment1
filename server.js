@@ -161,7 +161,11 @@ app.get("/api/student", async(req,res) =>{
             {
                 res.json(result.rows,
                     {
-                        errors : []
+                        error:error,
+                        code : code,
+                        kursnamn : kursnamn,
+                        syllabus : syllabus,
+                        progression : progression
                     }
                 );
             }
@@ -203,7 +207,11 @@ app.post('/addcourse', async (req, res) => {
     }
     res.render("addcourse",
         {
-            error:error
+            error:error,
+            code : code,
+            kursnamn : kursnamn,
+            syllabus : syllabus,
+            progression : progression
         }
     );
 
