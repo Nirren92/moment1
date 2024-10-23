@@ -136,7 +136,15 @@ app.get("/api/courses",async(req,res) =>{
             }
             else
             {
-                res.json(result.rows);
+                res.json(result.rows,
+                    {
+                        errors:[],
+                        code : "",
+                        kursnamn : "",
+                        syllabus : "",
+                        progression : "" 
+                    }
+                );
             }
 
         }
