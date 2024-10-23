@@ -21,14 +21,9 @@
 
     <h2>Lägg till kurser</h2>
 
-<% if(locals.error)
-{
-    <p>
-        <%= error %>
-    </p>
-        
-}
-%>
+    <% if (locals.error) { %>
+        <p><%= error %></p>
+    <% } %>
     
     <form id="inputform" action="/addcourse" method="post" >
         <label for="code">Kurskod</label>
