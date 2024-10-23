@@ -102,12 +102,12 @@ app.get("/addcourse", async(req,res) =>{
             {
                 
                 res.render('addcourse', {
-                    messages: result.rows, 
-                    errors:[],
-                    code : "",
-                    kursnamn : "",
-                    syllabus : "",
-                    progression : "" 
+                    messages: result.rows.length > 0 ? result.rows : [],
+                    errors: [],
+                    code: "",
+                    kursnamn: "",
+                    syllabus: "",
+                    progression: ""
                 });
             }
         }
