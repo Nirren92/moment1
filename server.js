@@ -44,6 +44,24 @@ client.connect((err) => {
 });
 
 
+//Validering av data
+
+//code, kursnamn, syllabus, progression
+const validateCourse = () => {
+    console.log("kontrollerar data");
+    return [
+       
+        body('progression').custom(value => ["A", "B", "C"].includes(value)).withMessage('Måste vara A, B eller C. notera stor bokstav'),
+        body('code').custom(value => value != "").withMessage('code Får inte vara tomt'),
+        body('kursnamn').custom(value => value != "").withMessage('kursnamn description Får inte vara tomt'),
+        body('syllabus').isURL().withMessage('Måste vara en giltlig URL')
+    ];
+};
+
+
+
+
+
 //Routing
 
 //startsida på server
@@ -199,15 +217,4 @@ app.listen(process.env.PORT, () =>{
 });
 
 
-//code, kursnamn, syllabus, progression
-const validateCourse = () => {
-    console.log("kontrollerar data");
-    return [
-       
-        body('progression').custom(value => ["A", "B", "C"].includes(value)).withMessage('Måste vara A, B eller C. notera stor bokstav'),
-        body('code').custom(value => value != "").withMessage('code Får inte vara tomt'),
-        body('kursnamn').custom(value => value != "").withMessage('kursnamn description Får inte vara tomt'),
-        body('syllabus').isURL().withMessage('Måste vara en giltlig URL')
-    ];
-};
 
