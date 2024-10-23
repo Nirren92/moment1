@@ -161,7 +161,7 @@ app.get("/api/student", async(req,res) =>{
             {
                 res.json(result.rows,
                     {
-                        errors:error,
+                        errors:[],
                         code : "",
                         kursnamn : "",
                         syllabus : "",
