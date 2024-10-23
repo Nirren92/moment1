@@ -101,7 +101,10 @@ app.get("/addcourse", async(req,res) =>{
             else
             {
                 
-                res.render('addcourse', { messages:result.rows });
+                res.render('addcourse', {
+                    messages: result.rows, 
+                    errors: [] 
+                });
             }
         }
     });
