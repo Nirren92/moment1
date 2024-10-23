@@ -103,7 +103,11 @@ app.get("/addcourse", async(req,res) =>{
                 
                 res.render('addcourse', {
                     messages: result.rows, 
-                    errors: [] 
+                    errors:[],
+                    code : "",
+                    kursnamn : "",
+                    syllabus : "",
+                    progression : "" 
                 });
             }
         }
