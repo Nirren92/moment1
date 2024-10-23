@@ -159,7 +159,11 @@ app.get("/api/student", async(req,res) =>{
             }
             else
             {
-                res.json(result.rows);
+                res.json(result.rows,
+                    {
+                        errors : []
+                    }
+                );
             }
         }
 
@@ -167,16 +171,30 @@ app.get("/api/student", async(req,res) =>{
 });
 
 //lägger till kurs
-app.post('/addcourse', validateCourse(), async (req, res) => {
-   let error = [];
+app.post('/addcourse', async (req, res) => {
+   let errors = [];
+   const { code, kursnamn, syllabus, progression } = req.body;
+
+    if(code ==="")
+    {
+        errors.push("Du måste ha nåt i code")
+    }
+    if(kursnamn ==="")
+    {
+        errors.push("Du måste ha nåt i kursnamn")
+    }    
+    if(syllabus ==="")
+    {
+        errors.push("Du måste ha nåt i syllabus")
+    }    
+    if(progression ==="" && (progression==="A" || progression==="B" ||progression==="C" ))
+    {
+        errors.push("Du måste ha nåt i progression samt så måste det vara A, B eller C. notera storbokstav")
+    }   
+    
     try
     {
-    const errorsval = validationResult(req);
-    if (!errorsval.isEmpty()) {
-      error: errorsval.array
-    }
-
-    const { code, kursnamn, syllabus, progression } = req.body;
+  
     const result = await client.query("INSERT INTO courses(code, name, syllabus, progression) VALUES ($1,$2,$3,$4)",[code, kursnamn, syllabus, progression])
     }
     catch (err)
