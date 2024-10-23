@@ -198,7 +198,7 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
 
     if (!errors.isEmpty()) {
         return res.render('addcourse', {
-            errors: errors.array().map(err => err.msg), // Fånga alla fel
+            errors: errors.array().map(err => err.msg),
             code: code,
             kursnamn: kursnamn,
             syllabus: syllabus,
@@ -212,11 +212,13 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
         {
     
         const result = await client.query("INSERT INTO courses(code, name, syllabus, progression) VALUES ($1,$2,$3,$4)",[code, kursnamn, syllabus, progression])
+        res.redirect("/addcourse");
         }
         catch (err)
         {
             console.error("Nåt gick fel:"+err)
-            res.render("addcourse", {
+            res.render('addcourse', {
+                messages: result.rows,
                 errors: ["Ett fel uppstod vid databasinsättningen."],
                 code: code,
                 kursnamn: kursnamn,
@@ -224,7 +226,7 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
                 progression: progression
             });
         }
-        res.redirect("/addcourse");
+        
     
     }
 });
