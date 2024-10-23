@@ -58,10 +58,6 @@ const validateCourse = () => {
     ];
 };
 
-
-
-
-
 //Routing
 
 //startsida på server
@@ -178,9 +174,7 @@ app.post('/addcourse', validateCourse(), async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
     {
-        return res.render('addcourse', {
-            errors: errors.array(),
-            formData: req.body});
+        return res.status(400).json({ errors: errors.array() });
     }
 
     const { code, kursnamn, syllabus, progression } = req.body;
