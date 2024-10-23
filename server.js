@@ -206,7 +206,6 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
 
     if (!errors.isEmpty()) {
         return res.render('addcourse', {
-            messages: messages,
             errors: errors.array().map(err => err.msg),
             code: code,
             kursnamn: kursnamn,
@@ -227,7 +226,6 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
         {
             console.error("Nåt gick fel:" + err);
             res.render('addcourse', {
-            messages: messages,
             errors: ["Ett fel uppstod vid databasinsättningen."],
             code: code,
             kursnamn: kursnamn,
