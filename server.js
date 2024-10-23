@@ -90,6 +90,14 @@ app.get("/addcourse", async(req,res) =>{
         if(err)
         {
             console.log("nåt gick fel")
+            res.render('addcourse', {
+                messages: result.rows.length > 0 ? result.rows : [],
+                errors: [],
+                code: "",
+                kursnamn: "",
+                syllabus: "",
+                progression: ""
+            });
         }
         else
         {
@@ -198,6 +206,7 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
 
     if (!errors.isEmpty()) {
         return res.render('addcourse', {
+            messages: messages,
             errors: errors.array().map(err => err.msg),
             code: code,
             kursnamn: kursnamn,
@@ -216,15 +225,15 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
         }
         catch (err)
         {
-            console.error("Nåt gick fel:"+err)
+            console.error("Nåt gick fel:" + err);
             res.render('addcourse', {
-                messages: result.rows,
-                errors: ["Ett fel uppstod vid databasinsättningen."],
-                code: code,
-                kursnamn: kursnamn,
-                syllabus: syllabus,
-                progression: progression
-            });
+            messages: messages,
+            errors: ["Ett fel uppstod vid databasinsättningen."],
+            code: code,
+            kursnamn: kursnamn,
+            syllabus: syllabus,
+            progression: progression
+        });
         }
         
     
