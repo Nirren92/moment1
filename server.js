@@ -91,7 +91,7 @@ app.get("/addcourse", async(req,res) =>{
         {
             console.log("nåt gick fel")
             res.render('addcourse', {
-                rows: result.rows,
+                messages: result.rows.length > 0 ? result.rows : [],
                 errors: [],
                 code: "",
                 kursnamn: "",
@@ -110,7 +110,7 @@ app.get("/addcourse", async(req,res) =>{
             {
                 
                 res.render('addcourse', {
-                    rows: result.rows,
+                    messages: result.rows.length > 0 ? result.rows : [],
                     errors: [],
                     code: "",
                     kursnamn: "",
