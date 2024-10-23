@@ -161,11 +161,11 @@ app.get("/api/student", async(req,res) =>{
             {
                 res.json(result.rows,
                     {
-                        error:error,
-                        code : code,
-                        kursnamn : kursnamn,
-                        syllabus : syllabus,
-                        progression : progression
+                        errors:error,
+                        code : "",
+                        kursnamn : "",
+                        syllabus : "",
+                        progression : "" 
                     }
                 );
             }

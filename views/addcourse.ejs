@@ -21,22 +21,30 @@
 
     <h2>Lägg till kurser</h2>
 
-    <% if (locals.error) { %>
-        <p><%= error %></p>
+    <% if (locals.errors.length > 0) { %>
+        <ul>
+            <% errors.forEach((error) => {%>
+            <li>
+                <%= error %>
+            </li>
+            <% });%>
+
+        </ul>
+
     <% } %>
     
     <form id="inputform" action="/addcourse" method="post" >
         <label for="code">Kurskod</label>
-        <input type="text" id="code" name="code" required>
+        <input type="text" id="code" name="code" <%= code%> required>
         <br>
         <label for="kursnamn">Kursnamn</label>
-        <input type="text" id="kursnamn" name="kursnamn" required>
+        <input type="text" id="kursnamn" name="kursnamn" <%= kursnamn%> required>
         <br>
         <label for="progression">Progression</label>
-        <input type="text" id="progression" name="progression" required>
+        <input type="text" id="progression" name="progression" <%= progression%> required>
         <br>
         <label for="syllabus">Lånk/URL</label>
-        <input type="text" id="syllabus" name="syllabus" required>
+        <input type="text" id="syllabus" name="syllabus" <%= syllabus%> required>
         <br>
         <button type="submit">Lägg till data</button>
     </form>
