@@ -61,35 +61,9 @@
                 <td><%= message.name %></td>
                 <td><%= message.progression %></td>
                 <td><%= message.syllabus %></td>
-                <td class="tdbutton" >
+                <td class="tdbutton">
                     <form method="post" action="/removecourse">
-                        <input type="hidden" name="code" value="<%=message.code
-                        
-                        
-                        
-                        <table id="tabell">
-                            <tr>
-                                <th>Kurskod</th>
-                                <th>Kursnamn</th>
-                                <th>Progression</th>
-                                <th>URL</th>
-                            </tr>
-                            <% messages.forEach((message) => { %>
-                                <tr>
-                                    <td><%= message.code %></td>
-                                    <td><%= message.name %></td>
-                                    <td><%= message.progression %></td>
-                                    <td><%= message.syllabus %></td>
-                                    <td class="tdbutton">
-                                        <form method="post" action="/removecourse">
-                                            <input type="hidden" name="code" value="<%= message.code %>">
-                                            <input type="submit" value="Ta bort kurs">
-                                        </form>
-                                    </td>
-                                </tr>
-                            <% }) %>
-                        </table>%>">
-                        
+                        <input type="hidden" name="code" value="<%= message.code %>">
                         <input type="submit" value="Ta bort kurs">
                     </form>
                 </td>
