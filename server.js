@@ -194,28 +194,46 @@ app.post('/addcourse', async (req, res) => {
     if(progression ==="" && (progression==="A" || progression==="B" ||progression==="C" ))
     {
         errors.push("Du måste ha nåt i progression samt så måste det vara A, B eller C. notera storbokstav")
-    }   
-    
-    try
-    {
-  
-    const result = await client.query("INSERT INTO courses(code, name, syllabus, progression) VALUES ($1,$2,$3,$4)",[code, kursnamn, syllabus, progression])
-    }
-    catch (err)
-    {
-        console.error("Nåt gick fel:"+err)
-    }
-    res.render("addcourse",
-        {
-            error:error,
-            code : code,
-            kursnamn : kursnamn,
-            syllabus : syllabus,
-            progression : progression
-        }
-    );
+    } 
 
+    // Om det finns valideringsfel  
+    if (errors.length > 0) {
+   
+        res.render("addcourse", {
+            errors: errors,
+            code: code,
+            kursnamn: kursnamn,
+            syllabus: syllabus,
+            progression: progression
+        });
+    }
+
+    else
+    {
+        try
+        {
+    
+        const result = await client.query("INSERT INTO courses(code, name, syllabus, progression) VALUES ($1,$2,$3,$4)",[code, kursnamn, syllabus, progression])
+        }
+        catch (err)
+        {
+            console.error("Nåt gick fel:"+err)
+            res.render("addcourse", {
+                errors: ["Ett fel uppstod vid databasinsättningen."],
+                code: code,
+                kursnamn: kursnamn,
+                syllabus: syllabus,
+                progression: progression
+            });
+        }
+        res.redirect("/addcourse");
+    
+    }
 });
+
+
+
+
 //tar bort kurs
 app.post('/removecourse', async (req, res) => {
     try
