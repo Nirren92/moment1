@@ -45,8 +45,6 @@ client.connect((err) => {
 
 
 //Validering av data
-
-//code, kursnamn, syllabus, progression
 const validateCourse = () => {
     console.log("kontrollerar data");
     return [
@@ -83,7 +81,6 @@ app.get("/", async(req,res) =>{
     });
 });
 
-
 //adddera kurs på server
 app.get("/addcourse", async(req, res) => {
     client.query("SELECT * FROM courses", (err, result) => {
@@ -110,16 +107,11 @@ app.get("/addcourse", async(req, res) => {
         }
     });
 });
-
-
 //about sida
 
 //startsida på server
 app.get("/about", async(req,res) =>{
- 
-                res.render('about');
-         
-    
+                res.render('about');  
 });
 
 
@@ -231,11 +223,13 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
 
                     if(resultExist == 0 )
                     {
+                        //kursen finns inte och den har validerat ok. sätter in den. 
                         const result = await client.query("INSERT INTO courses(code, name, syllabus, progression) VALUES ($1,$2,$3,$4)",[code, kursnamn, syllabus, progression])
                         res.redirect("/addcourse");
                     }
                     else
                     {
+                        //kursen finns redan. skriver ut felmeddelande och returnerar formulärdata. 
                         res.render('addcourse', {
                             messages: result.rows.length > 0 ? result.rows : [], 
                             errors: ["Kursen finns redan, se över Code"],

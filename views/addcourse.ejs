@@ -34,13 +34,13 @@
         <input type="text" id="code" name="code" value="<%= code %>" required>
         <br>
         <label for="kursnamn">Kursnamn</label>
-        <input type="text" id="kursnamn" name="kursnamn" value="<%= kursnamn %>"" required>
+        <input type="text" id="kursnamn" name="kursnamn" value="<%= kursnamn %>" required>
         <br>
         <label for="progression">Progression</label>
-        <input type="text" id="progression" name="progression" value="<%= progression %>"" required>
+        <input type="text" id="progression" name="progression" value="<%= progression %>" required>
         <br>
         <label for="syllabus">Lånk/URL</label>
-        <input type="text" id="syllabus" name="syllabus" value="<%= syllabus %>"" required>
+        <input type="text" id="syllabus" name="syllabus" value="<%= syllabus %>" required>
         <br>
         <button type="submit">Lägg till data</button>
     </form>
@@ -64,7 +64,7 @@
                 <td class="tdbutton">
                     <form method="post" action="/removecourse">
                         <input type="hidden" name="code" value="<%= message.code %>">
-                        <input type="submit" value="Ta bort kurs">
+                        <input type="submit" value="Radera">
                     </form>
                 </td>
             </tr>
