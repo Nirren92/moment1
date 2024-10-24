@@ -180,12 +180,9 @@ app.get("/api/student", async(req,res) =>{
 
 //lägger till kurs
 app.post('/addcourse', validateCourse(),async (req, res) => {
-    
     //validerar indata
     const errors = validationResult(req);
-   
     const { code, kursnamn, syllabus, progression } = req.body;
-
     //finns nåt valideringsfel så skrivs detta till sida
     if (!errors.isEmpty()) {
             res.render('addcourse', {
@@ -203,12 +200,10 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
     {
         try
         {
-    
             //kontrollerar så inte nyckelattribut existerar
             const resultExist = await client.query("SELECT * FROM courses WHERE code = $1",[code])
             console.log(code,resultExist.rows)
             client.query("SELECT * FROM courses", async (err, result) => {
-            
 
                 if(resultExist.rows.length === 0) 
                 {
@@ -246,9 +241,6 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
         }
     }
 });
-
-
-
 
 //tar bort kurs
 app.post('/removecourse', async (req, res) => {
