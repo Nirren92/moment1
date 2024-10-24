@@ -216,7 +216,7 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
         const resultExist = await client.query("SELECT * FROM courses WHERE code = $1",[code])
 
 
-        if(resultExist > 0 )
+        if(resultExist == 0 )
         {
             const result = await client.query("INSERT INTO courses(code, name, syllabus, progression) VALUES ($1,$2,$3,$4)",[code, kursnamn, syllabus, progression])
             res.redirect("/addcourse");
@@ -239,7 +239,7 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
             console.error("Nåt gick fel:" + err);
             res.render('addcourse', {
             messages: [],
-            errors: ["Ett fel uppstod vid databasinsättningen."],
+            errors: ["Ett fel uppstod i databasen."],
             code: code,
             kursnamn: kursnamn,
             syllabus: syllabus,
