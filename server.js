@@ -204,42 +204,31 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
         try
         {
     
-        //kontrollerar så inte nyckelattribut existerar
-        const resultExist = await client.query("SELECT * FROM courses WHERE code = $1",[code])
+            //kontrollerar så inte nyckelattribut existerar
+            const resultExist = await client.query("SELECT * FROM courses WHERE code = $1",[code])
+            console.log(code,resultExist.rows)
+            client.query("SELECT * FROM courses", async (err, result) => {
+            
 
-        client.query("SELECT * FROM courses", async (err, result) => {
-            if (err) {
-                console.log("nåt gick fel");
-                res.render('addcourse', {
-                    messages: [], 
-                    errors: [],
-                    code: "",
-                    kursnamn: "",
-                    syllabus: "",
-                    progression: ""
-                });
-            } 
-            else {
-
-                    if(resultExist == 0 )
-                    {
-                        //kursen finns inte och den har validerat ok. sätter in den. 
-                        const result = await client.query("INSERT INTO courses(code, name, syllabus, progression) VALUES ($1,$2,$3,$4)",[code, kursnamn, syllabus, progression])
-                        res.redirect("/addcourse");
-                    }
-                    else
-                    {
-                        //kursen finns redan. skriver ut felmeddelande och returnerar formulärdata. 
-                        res.render('addcourse', {
-                            messages: result.rows.length > 0 ? result.rows : [], 
-                            errors: ["Kursen finns redan, se över Code"],
-                            code: code,
-                            kursnamn: kursnamn,
-                            syllabus: syllabus,
-                            progression: progression
-                        });
-                    }   
-            }
+                if(resultExist.rows.length === 0) 
+                {
+                    //kursen finns inte och den har validerat ok. sätter in den. 
+                    const result = await client.query("INSERT INTO courses(code, name, syllabus, progression) VALUES ($1,$2,$3,$4)",[code, kursnamn, syllabus, progression])
+                    res.redirect("/addcourse");
+                }
+                else
+                {
+                    //kursen finns redan. skriver ut felmeddelande och returnerar formulärdata. 
+                    res.render('addcourse', {
+                    messages: result.rows.length > 0 ? result.rows : [], 
+                    errors: ["Kursen finns redan, se över Code"],
+                    code: code,
+                    kursnamn: kursnamn,
+                    syllabus: syllabus,
+                    progression: progression
+                    });
+                }   
+            
         });
  
         }
