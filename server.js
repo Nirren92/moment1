@@ -189,10 +189,12 @@ app.get("/api/student", async(req,res) =>{
 //lägger till kurs
 app.post('/addcourse', validateCourse(),async (req, res) => {
     
+    //validerar indata
     const errors = validationResult(req);
    
     const { code, kursnamn, syllabus, progression } = req.body;
 
+    //finns nåt valideringsfel så skrivs detta till sida
     if (!errors.isEmpty()) {
             res.render('addcourse', {
                 messages: [],
@@ -211,7 +213,7 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
         {
     
         //kontrollerar så inte nyckelattribut existerar
-        const resultExist = await client.query("SELECT * FROM courses WHERE code = $1",[code, kursnamn, syllabus, progression])
+        const resultExist = await client.query("SELECT * FROM courses WHERE code = $1",[code])
 
 
         if(resultExist > 0 )
@@ -222,6 +224,7 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
         else
         {
             res.render('addcourse', {
+                messages: [],
                 errors: ["Kursen finns redan, se över Code"],
                 code: code,
                 kursnamn: kursnamn,
@@ -235,6 +238,7 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
         {
             console.error("Nåt gick fel:" + err);
             res.render('addcourse', {
+            messages: [],
             errors: ["Ett fel uppstod vid databasinsättningen."],
             code: code,
             kursnamn: kursnamn,
@@ -242,8 +246,6 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
             progression: progression
         });
         }
-        
-    
     }
 });
 
