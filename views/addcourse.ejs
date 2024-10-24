@@ -31,16 +31,16 @@
     
     <form id="inputform" action="/addcourse" method="post" >
         <label for="code">Kurskod</label>
-        <input type="text" id="code" name="code" <%= code %> required>
+        <input type="text" id="code" name="code" value="<%= code %>" required>
         <br>
         <label for="kursnamn">Kursnamn</label>
-        <input type="text" id="kursnamn" name="kursnamn" <%= kursnamn %> required>
+        <input type="text" id="kursnamn" name="kursnamn" value="<%= kursnamn %>"" required>
         <br>
         <label for="progression">Progression</label>
-        <input type="text" id="progression" name="progression" <%= progression %> required>
+        <input type="text" id="progression" name="progression" value="<%= progression %>"" required>
         <br>
         <label for="syllabus">Lånk/URL</label>
-        <input type="text" id="syllabus" name="syllabus" <%= syllabus %> required>
+        <input type="text" id="syllabus" name="syllabus" value="<%= syllabus %>"" required>
         <br>
         <button type="submit">Lägg till data</button>
     </form>
