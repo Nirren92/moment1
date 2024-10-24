@@ -194,17 +194,15 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
     const { code, kursnamn, syllabus, progression } = req.body;
 
     if (!errors.isEmpty()) {
-        // Fetch current courses again for the page
-        client.query("SELECT * FROM courses", (err, result) => {
             res.render('addcourse', {
-                messages: result.rows.length > 0 ? result.rows : [],
+                messages: [],
                 errors: errors.array().map(err => err.msg),
                 code: code,
                 kursnamn: kursnamn,
                 syllabus: syllabus,
                 progression: progression
             });
-        });
+        
         return;
     }
     else
@@ -212,8 +210,26 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
         try
         {
     
-        const result = await client.query("INSERT INTO courses(code, name, syllabus, progression) VALUES ($1,$2,$3,$4)",[code, kursnamn, syllabus, progression])
-        res.redirect("/addcourse");
+        //kontrollerar så inte nyckelattribut existerar
+        const resultExist = await client.query("SELECT * FROM courses WHERE code = $1",[code, kursnamn, syllabus, progression])
+
+
+        if(resultExist > 0 )
+        {
+            const result = await client.query("INSERT INTO courses(code, name, syllabus, progression) VALUES ($1,$2,$3,$4)",[code, kursnamn, syllabus, progression])
+            res.redirect("/addcourse");
+        }
+        else
+        {
+            res.render('addcourse', {
+                errors: ["Kursen finns redan, se över Code"],
+                code: code,
+                kursnamn: kursnamn,
+                syllabus: syllabus,
+                progression: progression
+            });
+        }
+        
         }
         catch (err)
         {
