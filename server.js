@@ -184,20 +184,6 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
     const errors = validationResult(req);
     const { code, kursnamn, syllabus, progression } = req.body;
     //finns nåt valideringsfel så skrivs detta till sida
-    if (!errors.isEmpty()) {
-            res.render('addcourse', {
-                messages: [],
-                errors: errors.array().map(err => err.msg),
-                code: code,
-                kursnamn: kursnamn,
-                syllabus: syllabus,
-                progression: progression
-            });
-        
-        return;
-    }
-    else
-    {
         try
         {
             //kontrollerar så inte nyckelattribut existerar
@@ -205,7 +191,20 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
             console.log(code,resultExist.rows)
             client.query("SELECT * FROM courses", async (err, result) => {
 
-                if(resultExist.rows.length === 0) 
+                if (!errors.isEmpty()) {
+                    res.render('addcourse', {
+                        messages: result.rows.length > 0 ? result.rows : [], 
+                        errors: errors.array().map(err => err.msg),
+                        code: code,
+                        kursnamn: kursnamn,
+                        syllabus: syllabus,
+                        progression: progression
+                    });
+                
+                    return;
+                }
+
+                else if(resultExist.rows.length === 0) 
                 {
                     //kursen finns inte och den har validerat ok. sätter in den. 
                     const result = await client.query("INSERT INTO courses(code, name, syllabus, progression) VALUES ($1,$2,$3,$4)",[code, kursnamn, syllabus, progression])
@@ -239,7 +238,6 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
             progression: progression
         });
         }
-    }
 });
 
 //tar bort kurs
@@ -259,7 +257,7 @@ app.post('/removecourse', async (req, res) => {
     {
         console.error("Nåt gick fel:"+err)
     }
-    res.redirect('/');
+    res.redirect('/addcourse');
 });
 
 //Starta server
