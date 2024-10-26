@@ -164,6 +164,13 @@ tr:nth-child(even)
 }
 
 
+tr:not(:first-child):hover {
+    background-color: #cccaca;
+    
+}
+
+
+
 h1
 {
     width: 100%;
