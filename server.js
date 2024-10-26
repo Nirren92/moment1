@@ -3,21 +3,13 @@ const {Client} = require("pg");
 const { body, validationResult } = require("express-validator");
 require("dotenv").config();
 
-
-
 const express = require("express");
 const app = express();
 app.use(express.json());
 
-
-
-
-
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({extended:true}));
-
-
 
 //Ansluter
 const client = new Client({
@@ -31,7 +23,6 @@ const client = new Client({
     },
 }); 
 
-
 client.connect((err) => {
     if(err)
     {
@@ -42,7 +33,6 @@ client.connect((err) => {
         console.log("Ansluten till datbas. ");
     }
 });
-
 
 //Validering av data
 const validateCourse = () => {
@@ -55,7 +45,6 @@ const validateCourse = () => {
         body('syllabus').isURL().withMessage('Måste vara en giltlig URL')
     ];
 };
-
 //Routing
 
 //startsida på server
@@ -188,7 +177,6 @@ app.post('/addcourse', validateCourse(),async (req, res) => {
         {
             //kontrollerar så inte nyckelattribut existerar
             const resultExist = await client.query("SELECT * FROM courses WHERE code = $1",[code])
-            console.log(code,resultExist.rows)
             client.query("SELECT * FROM courses", async (err, result) => {
 
                 if (!errors.isEmpty()) {
