@@ -248,6 +248,7 @@ app.post('/removecourse', async (req, res) => {
     res.redirect('/addcourse');
 });
 
+
 //Starta server
 app.listen(process.env.PORT, () =>{
     console.log("server startad");   
